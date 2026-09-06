@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — Sahakari Seva</title>
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/worker.css">
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="app-sidebar">
+    <div class="sidebar-brand"><span class="brand-mark" aria-hidden="true" style="width:22px;height:22px;border-radius:50%;background:conic-gradient(from 200deg, var(--teal-400), var(--navy-700), var(--teal-400));"></span> Sahakari Seva</div>
+
+    <nav class="sidebar-nav" id="sidebarNav">
+      <a href="dashboard.html" class="nav-item is-active" data-view="dashboard">
+        <span class="nav-icon">▤</span> <span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+      <a href="community.html" class="nav-item" data-view="community">
+        <span class="nav-icon">◎</span> <span data-i18n="nav_community">Community</span>
+      </a>
+      <a href="history.html" class="nav-item" data-view="history">
+        <span class="nav-icon">≡</span> <span data-i18n="nav_history">History</span>
+      </a>
+    </nav>
+
+
+    <div class="sidebar-foot">
+      <div class="avatar-sm">MK</div>
+      <div class="who">
+        <strong>Murugan K.</strong>
+        <span>Electrician · Verified</span>
+      </div>
+      <button class="logout-btn" id="logoutBtn" title="Log out">⏻</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="app-main">
+
+    <!-- ============ DASHBOARD VIEW ============ -->
+    <section class="view-panel is-active" id="view-dashboard">
+      <div class="app-topbar">
+        <div>
+          <h1 data-i18n="greeting">Good morning, Murugan</h1>
+          <p class="sub" data-i18n="jobs_available_sub">4 unclaimed jobs match your skills near you today.</p>
+        </div>
+        <select class="lang-select" aria-label="Choose language">
+          <option value="en">English</option>
+          <option value="ta">தமிழ் (Tamil)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="kn">ಕನ್ನಡ (Kannada)</option>
+          <option value="ml">മലയാളം (Malayalam)</option>
+        </select>
+      </div>
+
+      <div class="stat-strip">
+        <div class="stat-cell accent"><span class="num">4</span><span class="lbl" data-i18n="stat_open_jobs">Open jobs nearby</span></div>
+        <div class="stat-cell"><span class="num">₹8,400</span><span class="lbl" data-i18n="stat_weekly_earned">Earned this week</span></div>
+        <div class="stat-cell"><span class="num">4.9</span><span class="lbl" data-i18n="stat_avg_rating">Average rating</span></div>
+        <div class="stat-cell"><span class="num">2</span><span class="lbl" data-i18n="stat_active_trainings">Active peer trainings</span></div>
+      </div>
+
+      <div class="section-block">
+        <div class="block-head">
+          <h2 data-i18n="available_jobs">Available jobs</h2>
+          <a href="#" class="link">View all →</a>
+        </div>
+
+        <div class="job-row urgent" data-client-name="Rajesh Ramachandran" data-client-age="44 yrs" data-client-phone="+91 98422 10482" data-client-address="42, 2nd Cross, Ganapathy, Coimbatore" data-client-notes="Main fuse box outside near entrance. Sparks in bedroom switchboard.">
+          <div class="job-icon">⚡</div>
+          <div class="job-info">
+            <div class="title">Fan &amp; switchboard repair — emergency</div>
+            <div class="meta">Ganapathy, Coimbatore · Posted 12 min ago · Electrical</div>
+          </div>
+          <div class="job-price">
+            <div class="amount">₹450</div>
+            <div class="dist">1.8 km away</div>
+          </div>
+          <button class="job-accept" data-i18n="accept">Accept</button>
+        </div>
+
+        <div class="job-row" data-client-name="Senthil Kumar" data-client-age="51 yrs" data-client-phone="+91 97890 23411" data-client-address="18/B West Layout, R.S. Puram, Coimbatore" data-client-notes="Complete house inspection needed prior to tenant moving in.">
+          <div class="job-icon">🔧</div>
+          <div class="job-info">
+            <div class="title">Full house wiring inspection</div>
+            <div class="meta">R.S. Puram, Coimbatore · Posted 40 min ago · Electrical</div>
+          </div>
+          <div class="job-price">
+            <div class="amount">₹1,200</div>
+            <div class="dist">3.2 km away</div>
+          </div>
+          <button class="job-accept" data-i18n="accept">Accept</button>
+        </div>
+
+        <div class="job-row" data-client-name="Anitha Vijay" data-client-age="36 yrs" data-client-phone="+91 94431 88209" data-client-address="8, Avinashi Road, Saibaba Colony, Coimbatore" data-client-notes="New decorative ceiling lights provided by client. Need mounting ladder.">
+          <div class="job-icon">💡</div>
+          <div class="job-info">
+            <div class="title">Install ceiling lights, 3 rooms</div>
+            <div class="meta">Saibaba Colony, Coimbatore · Posted 1 hr ago · Electrical</div>
+          </div>
+          <div class="job-price">
+            <div class="amount">₹700</div>
+            <div class="dist">4.5 km away</div>
+          </div>
+          <button class="job-accept" data-i18n="accept">Accept</button>
+        </div>
+
+        <div class="job-row" data-client-name="Karthik Swaminathan" data-client-age="39 yrs" data-client-phone="+91 98940 55123" data-client-address="74 Main Road, Peelamedu, Coimbatore" data-client-notes="Inverter trips whenever AC is turned on. Need diagnosis.">
+          <div class="job-icon">🔌</div>
+          <div class="job-info">
+            <div class="title">Inverter and MCB check</div>
+            <div class="meta">Peelamedu, Coimbatore · Posted 2 hr ago · Electrical</div>
+          </div>
+          <div class="job-price">
+            <div class="amount">₹550</div>
+            <div class="dist">5.1 km away</div>
+          </div>
+          <button class="job-accept" data-i18n="accept">Accept</button>
+        </div>
+      </div>
+
+      <!-- PEER TO PEER TRAINING SECTION -->
+      <div class="two-col" style="margin-top: 32px;">
+        <div class="info-card">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+            <div>
+              <h3 data-i18n="peer_training_title">Peer-to-Peer Worker Training</h3>
+              <p class="desc" data-i18n="peer_training_desc">No offices or federation needed. Post a training claim or train a fellow worker for a small fee.</p>
+            </div>
+          </div>
+          <button class="btn btn-teal" style="width:100%; justify-content:center; margin-top:8px;" id="openApplyTrainingModal" data-i18n="apply_training_btn">+ Apply for specific training</button>
+        </div>
+
+        <div class="info-card">
+          <h3 data-i18n="open_training_claims">Open peer training requests</h3>
+          
+          <div class="training-item" style="display:flex; justify-content:space-between; align-items:center; padding: 12px 0; border-bottom:1px solid var(--grey-200);">
+            <div>
+              <strong style="display:block; font-size:0.95rem;" data-i18n="claim_solar">Solar panel wiring &amp; inverter setup</strong>
+              <span class="dur" style="font-size:0.8rem; color:var(--grey-600);" data-i18n="claim_solar_sub">Requested by Kumar P. · Offering ₹400 for 2 hrs hands-on guidance</span>
+            </div>
+            <button class="btn btn-navy-outline peer-train-accept" style="padding:6px 14px; font-size:0.82rem;" data-i18n="accept_and_train">Accept &amp; Train</button>
+          </div>
+
+          <div class="training-item" style="display:flex; justify-content:space-between; align-items:center; padding: 12px 0;">
+            <div>
+              <strong style="display:block; font-size:0.95rem;" data-i18n="claim_smart">Smart home switchboard installation</strong>
+              <span class="dur" style="font-size:0.8rem; color:var(--grey-600);" data-i18n="claim_smart_sub">Requested by Selvam R. · Offering ₹300 for 1.5 hrs training</span>
+            </div>
+            <button class="btn btn-navy-outline peer-train-accept" style="padding:6px 14px; font-size:0.82rem;" data-i18n="accept_and_train">Accept &amp; Train</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COMMUNITY VIEW ============ -->
+    <section class="view-panel" id="view-community">
+      <div class="app-topbar">
+        <div>
+          <h1 data-i18n="nav_community">Community</h1>
+          <p class="sub">Your worker group, representative, and peer network.</p>
+        </div>
+      </div>
+      <div class="construction-panel">
+        <div class="icon">🤝</div>
+        <h2>Peer Cooperative Network</h2>
+        <p>Connect with peer workers in Coimbatore, share tool recommendations, and request on-site peer assistance.</p>
+      </div>
+    </section>
+
+    <!-- ============ HISTORY VIEW ============ -->
+    <section class="view-panel" id="view-history">
+      <div class="app-topbar">
+        <div>
+          <h1 data-i18n="history_title">Work history</h1>
+          <p class="sub" data-i18n="history_sub">Every completed job, payment, and transaction detail.</p>
+        </div>
+      </div>
+
+      <div class="stat-strip">
+        <div class="stat-cell"><span class="num">142</span><span class="lbl">Jobs completed</span></div>
+        <div class="stat-cell accent"><span class="num">₹1,86,400</span><span class="lbl" data-i18n="total_earned">Total earned</span></div>
+        <div class="stat-cell"><span class="num">₹4,200</span><span class="lbl">Extra payments (tips)</span></div>
+        <div class="stat-cell"><span class="num">4.9 / 5</span><span class="lbl">Average client rating</span></div>
+      </div>
+
+      <div class="filter-tabs">
+        <span class="filter-tab is-active" data-filter="all" data-i18n="tab_all">All</span>
+        <span class="filter-tab" data-filter="month" data-i18n="tab_this_month">This month</span>
+        <span class="filter-tab" data-filter="paid" data-i18n="tab_paid">Paid</span>
+        <span class="filter-tab" data-filter="processing" data-i18n="tab_processing">Processing</span>
+      </div>
+
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th data-i18n="th_job">Job</th>
+            <th data-i18n="th_client_area">Client area</th>
+            <th data-i18n="th_date">Date</th>
+            <th data-i18n="th_payment">Payment</th>
+            <th data-i18n="th_status">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-status="paid">
+            <td>Ceiling fan installation</td>
+            <td>Race Course, Coimbatore</td>
+            <td>28 Aug 2026</td>
+            <td>
+              <span class="amt-cell">₹650</span>
+              <span class="extra">+ ₹100 tip</span>
+            </td>
+            <td><span class="pill pill-teal">Paid</span></td>
+          </tr>
+          <tr data-status="paid">
+            <td>Switchboard replacement</td>
+            <td>Gandhipuram, Coimbatore</td>
+            <td>25 Aug 2026</td>
+            <td><span class="amt-cell">₹420</span></td>
+            <td><span class="pill pill-teal">Paid</span></td>
+          </tr>
+          <tr data-status="paid">
+            <td>House rewiring — 2BHK</td>
+            <td>Vadavalli, Coimbatore</td>
+            <td>21 Aug 2026</td>
+            <td>
+              <span class="amt-cell">₹3,200</span>
+              <span class="extra">+ ₹300 tip</span>
+            </td>
+            <td><span class="pill pill-teal">Paid</span></td>
+          </tr>
+          <tr data-status="processing">
+            <td>Inverter servicing</td>
+            <td>Saravanampatti, Coimbatore</td>
+            <td>18 Aug 2026</td>
+            <td><span class="amt-cell">₹500</span></td>
+            <td><span class="pill pill-amber">Processing</span></td>
+          </tr>
+          <tr data-status="paid">
+            <td>Emergency short-circuit fix</td>
+            <td>Peelamedu, Coimbatore</td>
+            <td>14 Aug 2026</td>
+            <td>
+              <span class="amt-cell">₹800</span>
+              <span class="extra">+ ₹150 tip</span>
+            </td>
+            <td><span class="pill pill-teal">Paid</span></td>
+          </tr>
+          <tr data-status="processing">
+            <td>Light fitting, 3 rooms</td>
+            <td>R.S. Puram, Coimbatore</td>
+            <td>9 Aug 2026</td>
+            <td><span class="amt-cell">₹700</span></td>
+            <td><span class="pill pill-amber">Processing</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+</div>
+
+<!-- PEER TRAINING APPLICATION MODAL -->
+<div class="modal-overlay" id="applyTrainingModal">
+  <div class="modal-box">
+    <h3 data-i18n="apply_training_btn">+ Apply for specific training</h3>
+    <p>Describe the skill or topic you want hands-on training for. Experienced peer workers near you will be notified to accept your proposal.</p>
+    <div class="field" style="margin-top:16px;">
+      <label for="trainingTopic">Specific Skill / Topic Required</label>
+      <input type="text" id="trainingTopic" placeholder="e.g. Solar panel connection or Three-phase wiring">
+    </div>
+    <div class="field">
+      <label for="trainingFee">Proposed Training Fee to Peer (₹)</label>
+      <input type="number" id="trainingFee" placeholder="e.g. 350">
+    </div>
+    <div class="field">
+      <label for="trainingTime">Preferred Schedule / Duration</label>
+      <input type="text" id="trainingTime" placeholder="e.g. Weekend morning, 2 hours">
+    </div>
+    <div class="modal-actions" style="margin-top:24px;">
+      <button class="btn btn-ghost" id="closeTrainingModal" data-i18n="cancel">Cancel</button>
+      <button class="btn btn-teal" id="submitTrainingRequest">Submit Training Claim</button>
+    </div>
+  </div>
+</div>
+
+<!-- LOGOUT CONFIRMATION MODAL -->
+<div class="modal-overlay" id="logoutModal">
+  <div class="modal-box">
+    <h3 data-i18n="logout_confirm_title">Confirm Logout</h3>
+    <p data-i18n="logout_confirm_msg">Are you sure you want to log out of Sahakari Seva?</p>
+    <div class="modal-actions" style="margin-top:24px;">
+      <button class="btn btn-ghost" id="cancelLogoutBtn" data-i18n="cancel">Cancel</button>
+      <button class="btn btn-teal" style="background:var(--red-500);" id="confirmLogout" data-i18n="confirm_logout">Yes, Log Out</button>
+    </div>
+  </div>
+</div>
+
+<!-- WORKER PROFILE STATS & SCORE MODAL -->
+<div class="modal-overlay" id="profileStatsModal">
+  <div class="modal-box" style="max-width: 580px;">
+    <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--grey-200);">
+      <div class="avatar-sm" style="width:52px; height:52px; font-size:1.3rem; background:var(--teal-500); color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700;">MK</div>
+      <div>
+        <h3 style="font-size:1.25rem; margin:0;" data-i18n="profile_stats_title">Worker Trust &amp; Performance Score</h3>
+        <p style="font-size:0.85rem; color:var(--grey-600); margin:2px 0 0 0;">Murugan K. · Verified Electrician (Coimbatore)</p>
+      </div>
+    </div>
+
+    <div style="background:var(--paper); border:1px solid var(--grey-200); border-radius:var(--r-sm); padding:20px; text-align:center; margin-bottom:20px;">
+      <span style="font-size:0.8rem; font-weight:700; color:var(--grey-600); text-transform:uppercase; letter-spacing:0.04em;" data-i18n="overall_score_lbl">Overall Rating Score</span>
+      <div style="font-family:var(--font-display); font-size:2.8rem; font-weight:800; color:var(--teal-600); line-height:1.1; margin:8px 0 4px 0;">4.9 <span style="font-size:1.4rem; color:var(--grey-600); font-family:var(--font-body); font-weight:500;">/ 5.0</span></div>
+      <span class="pill pill-teal" style="font-size:0.82rem; font-weight:700;">★ 98% Cooperative Trust Index</span>
+    </div>
+
+    <h4 style="font-size:0.95rem; margin-bottom:12px;" data-i18n="score_formula_title">How Your Score is Calculated</h4>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:20px;">
+      <div style="background:#fff; border:1px solid var(--grey-200); padding:12px 14px; border-radius:var(--r-sm);">
+        <strong style="display:block; font-size:0.85rem;" data-i18n="score_item_punctuality">On-Time Job Completion (40% weight)</strong>
+        <span style="font-size:0.8rem; color:var(--teal-600); font-weight:700;">99.2% punctuality rate</span>
+      </div>
+      <div style="background:#fff; border:1px solid var(--grey-200); padding:12px 14px; border-radius:var(--r-sm);">
+        <strong style="display:block; font-size:0.85rem;" data-i18n="score_item_ratings">Client Reviews &amp; Ratings (30% weight)</strong>
+        <span style="font-size:0.8rem; color:var(--teal-600); font-weight:700;">4.9 average stars (142 jobs)</span>
+      </div>
+      <div style="background:#fff; border:1px solid var(--grey-200); padding:12px 14px; border-radius:var(--r-sm);">
+        <strong style="display:block; font-size:0.85rem;" data-i18n="score_item_training">Peer Training Contributions (15% weight)</strong>
+        <span style="font-size:0.8rem; color:var(--teal-600); font-weight:700;">8 sessions completed</span>
+      </div>
+      <div style="background:#fff; border:1px solid var(--grey-200); padding:12px 14px; border-radius:var(--r-sm);">
+        <strong style="display:block; font-size:0.85rem;" data-i18n="score_item_disputes">Zero Dispute Record (15% weight)</strong>
+        <span style="font-size:0.8rem; color:var(--teal-600); font-weight:700;">0 unexcused cancellations</span>
+      </div>
+    </div>
+
+    <h4 style="font-size:0.95rem; margin-bottom:8px;" data-i18n="reasons_title">Reasons Behind Your Score</h4>
+    <ul style="margin:0 0 20px 0; padding-left:20px; font-size:0.88rem; color:var(--grey-800); line-height:1.6;">
+      <li data-i18n="reason_1">✓ 99.2% on-time arrival rate over 142 completed jobs</li>
+      <li data-i18n="reason_2">✓ Average 4.9 / 5.0 rating from verified clients</li>
+      <li data-i18n="reason_3">✓ Conducted 8 peer training sessions for fellow workers</li>
+    </ul>
+
+    <div class="modal-actions">
+      <button class="btn btn-teal" style="width:100%; justify-content:center;" id="closeProfileStatsModal" data-i18n="cancel">Close</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/i18n.js"></script>
+<script src="../js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work History — Sahakari Seva</title>
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/worker.css">
+</head>
+<body>
+<div class="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-mark" aria-hidden="true" style="width:22px;height:22px;border-radius:50%;background:conic-gradient(from 200deg, var(--teal-400), var(--navy-700), var(--teal-400));"></span>
+      Sahakari Seva
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item">
+        <span class="nav-icon">▤</span> <span data-i18n="nav_dashboard">Dashboard</span>
+      </a>
+      <a href="community.html" class="nav-item">
+        <span class="nav-icon">◎</span> <span data-i18n="nav_community">Community</span>
+      </a>
+      <a href="history.html" class="nav-item is-active">
+        <span class="nav-icon">≡</span> <span data-i18n="nav_history">History</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="avatar-sm">MK</div>
+      <div class="who">
+        <strong>Murugan K.</strong>
+        <span>Electrician · Verified</span>
+      </div>
+      <button class="logout-btn" id="logoutBtn" title="Log out">⏻</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="app-main">
+    <div class="app-topbar">
+      <div>
+        <h1 data-i18n="history_title">Job History &amp; Earnings</h1>
+        <p class="sub" data-i18n="history_sub">Track every completed task, client payout, and active processing status.</p>
+      </div>
+
+      <select class="lang-select" aria-label="Choose language">
+        <option value="en">English</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="hi">हिन्दी (Hindi)</option>
+        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+        <option value="ml">മലയാളം (Malayalam)</option>
+      </select>
+    </div>
+
+    <!-- KPI STRIP -->
+    <div class="stat-strip">
+      <div class="stat-cell accent">
+        <span class="num">₹1,86,400</span>
+        <span class="lbl" data-i18n="total_earned">Total earned</span>
+      </div>
+      <div class="stat-cell">
+        <span class="num">₹18,420</span>
+        <span class="lbl" data-i18n="tab_this_month">This month</span>
+      </div>
+      <div class="stat-cell">
+        <span class="num">138</span>
+        <span class="lbl" data-i18n="paid_payouts">Paid payouts</span>
+      </div>
+      <div class="stat-cell">
+        <span class="num">4</span>
+        <span class="lbl" data-i18n="processing_payouts">Processing payouts</span>
+      </div>
+    </div>
+
+    <!-- FILTER TABS: All, This Month, Paid, Processing -->
+    <div class="section-block" style="margin-top: 24px;">
+      <div class="filter-tabs" style="margin-bottom: 20px;">
+        <button class="filter-tab is-active" data-filter="all" data-i18n="tab_all">All</button>
+        <button class="filter-tab" data-filter="month" data-i18n="tab_this_month">This month</button>
+        <button class="filter-tab" data-filter="paid" data-i18n="tab_paid">Paid</button>
+        <button class="filter-tab" data-filter="processing" data-i18n="tab_processing">Processing</button>
+      </div>
+
+      <!-- SEARCH INPUT -->
+      <div style="margin-bottom: 20px;">
+        <input type="text" id="historySearch" placeholder="Search by job title, location or client name..." style="width:100%; max-width:480px; padding:10px 16px; border:1px solid var(--grey-200); border-radius:var(--r-sm); font-size:0.9rem;">
+      </div>
+
+      <!-- HISTORY RECONSTRUCTED TABLE -->
+      <table class="history-table" id="historyTable">
+        <thead>
+          <tr>
+            <th data-i18n="th_job">Job &amp; Details</th>
+            <th data-i18n="th_client_area">Client Area</th>
+            <th data-i18n="th_date">Date</th>
+            <th data-i18n="th_payment">Payment</th>
+            <th data-i18n="th_status">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-status="paid" data-month="current">
+            <td>
+              <strong style="display:block; font-size:0.98rem; color:var(--navy-950);">Ceiling fan &amp; wiring setup</strong>
+              <span style="font-size:0.8rem; color:var(--grey-600);">Client: Ramesh S.</span>
+            </td>
+            <td>Race Course, Coimbatore</td>
+            <td>28 Aug 2026</td>
+            <td>
+              <span class="amt-cell">₹650</span>
+              <span class="extra" style="color:var(--teal-600); font-weight:600;">+ ₹100 tip</span>
+            </td>
+            <td><span class="pill pill-teal" data-i18n="tab_paid">Paid</span></td>
+          </tr>
+
+          <tr data-status="paid" data-month="current">
+            <td>
+              <strong style="display:block; font-size:0.98rem; color:var(--navy-950);">Switchboard &amp; MCB replacement</strong>
+              <span style="font-size:0.8rem; color:var(--grey-600);">Client: Priya V.</span>
+            </td>
+            <td>Gandhipuram, Coimbatore</td>
+            <td>25 Aug 2026</td>
+            <td><span class="amt-cell">₹420</span></td>
+            <td><span class="pill pill-teal" data-i18n="tab_paid">Paid</span></td>
+          </tr>
+
+          <tr data-status="processing" data-month="current">
+            <td>
+              <strong style="display:block; font-size:0.98rem; color:var(--navy-950);">Inverter battery check &amp; service</strong>
+              <span style="font-size:0.8rem; color:var(--grey-600);">Client: Karthik S.</span>
+            </td>
+            <td>Saravanampatti, Coimbatore</td>
+            <td>18 Aug 2026</td>
+            <td><span class="amt-cell">₹500</span></td>
+            <td><span class="pill pill-amber" data-i18n="tab_processing">Processing</span></td>
+          </tr>
+
+          <tr data-status="paid" data-month="current">
+            <td>
+              <strong style="display:block; font-size:0.98rem; color:var(--navy-950);">House rewiring — 2BHK</strong>
+              <span style="font-size:0.8rem; color:var(--grey-600);">Client: Sundarraj K.</span>
+            </td>
+            <td>Vadavalli, Coimbatore</td>
+            <td>21 Aug 2026</td>
+            <td>
+              <span class="amt-cell">₹3,200</span>
+              <span class="extra" style="color:var(--teal-600); font-weight:600;">+ ₹300 tip</span>
+            </td>
+            <td><span class="pill pill-teal" data-i18n="tab_paid">Paid</span></td>
+          </tr>
+
+          <tr data-status="paid" data-month="current">
+            <td>
+              <strong style="display:block; font-size:0.98rem; color:var(--navy-950);">Emergency short-circuit diagnosis</strong>
+              <span style="font-size:0.8rem; color:var(--grey-600);">Client: Anandhi M.</span>
+            </td>
+            <td>Peelamedu, Coimbatore</td>
+            <td>14 Aug 2026</td>
+            <td>
+              <span class="amt-cell">₹800</span>
+              <span class="extra" style="color:var(--teal-600); font-weight:600;">+ ₹150 tip</span>
+            </td>
+            <td><span class="pill pill-teal" data-i18n="tab_paid">Paid</span></td>
+          </tr>
+
+          <tr data-status="processing" data-month="current">
+            <td>
+              <strong style="display:block; font-size:0.98rem; color:var(--navy-950);">Decorative light fitting, 3 rooms</strong>
+              <span style="font-size:0.8rem; color:var(--grey-600);">Client: Balaji N.</span>
+            </td>
+            <td>R.S. Puram, Coimbatore</td>
+            <td>9 Aug 2026</td>
+            <td><span class="amt-cell">₹700</span></td>
+            <td><span class="pill pill-amber" data-i18n="tab_processing">Processing</span></td>
+          </tr>
+
+          <tr data-status="paid" data-month="past">
+            <td>
+              <strong style="display:block; font-size:0.98rem; color:var(--navy-950);">AC line separate wiring</strong>
+              <span style="font-size:0.8rem; color:var(--grey-600);">Client: Venkatesh R.</span>
+            </td>
+            <td>Saibaba Colony, Coimbatore</td>
+            <td>28 July 2026</td>
+            <td><span class="amt-cell">₹1,100</span></td>
+            <td><span class="pill pill-teal" data-i18n="tab_paid">Paid</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- LOGOUT CONFIRMATION MODAL -->
+<div class="modal-overlay" id="logoutModal">
+  <div class="modal-box">
+    <h3 data-i18n="logout_confirm_title">Confirm Logout</h3>
+    <p data-i18n="logout_confirm_msg">Are you sure you want to log out of Sahakari Seva?</p>
+    <div class="modal-actions" style="margin-top:24px;">
+      <button class="btn btn-ghost" id="cancelLogoutBtn" data-i18n="cancel">Cancel</button>
+      <button class="btn btn-teal" style="background:var(--red-500);" id="confirmLogout" data-i18n="confirm_logout">Yes, Log Out</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/i18n.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Filter tabs
+  const tabs = document.querySelectorAll('.filter-tab[data-filter]');
+  const rows = document.querySelectorAll('#historyTable tbody tr');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('is-active'));
+      tab.classList.add('is-active');
+
+      const filter = tab.dataset.filter;
+      rows.forEach(row => {
+        const status = row.dataset.status;
+        const month = row.dataset.month;
+
+        if (filter === 'all') {
+          row.style.display = '';
+        } else if (filter === 'month') {
+          row.style.display = (month === 'current') ? '' : 'none';
+        } else if (filter === 'paid') {
+          row.style.display = (status === 'paid') ? '' : 'none';
+        } else if (filter === 'processing') {
+          row.style.display = (status === 'processing') ? '' : 'none';
+        }
+      });
+    });
+  });
+
+  // Search input
+  const searchInput = document.getElementById('historySearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase();
+      rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(q) ? '' : 'none';
+      });
+    });
+  }
+
+  // Logout modal
+  const logoutBtn = document.getElementById('logoutBtn');
+  const logoutModal = document.getElementById('logoutModal');
+  const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
+  const confirmLogout = document.getElementById('confirmLogout');
+
+  if (logoutBtn && logoutModal) {
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      logoutModal.classList.add('is-open');
+    });
+    if (cancelLogoutBtn) cancelLogoutBtn.addEventListener('click', () => logoutModal.classList.remove('is-open'));
+    if (confirmLogout) confirmLogout.addEventListener('click', () => window.location.href = '../index.html');
+  }
+});
+</script>
+</body>
+</html>

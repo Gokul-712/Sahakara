@@ -1,0 +1,1978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community — Sahakari Seva</title>
+<style>
+/* ============================================================
+   COOPERATIVE GIG SERVICES PLATFORM — DESIGN TOKENS
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Color -- deep cooperative navy + working teal, warm dark grey for grounding */
+  --navy-950: #081420;
+  --navy-900: #0d1f30;
+  --navy-800: #14304a;
+  --navy-700: #1c4262;
+  --teal-600: #0f766e;
+  --teal-500: #17998a;
+  --teal-400: #35b8a6;
+  --teal-300: #8fd9cb;
+  --teal-100: #e3f6f2;
+  --grey-800: #2b2f34;
+  --grey-600: #565d64;
+  --grey-400: #8b939a;
+  --grey-200: #dde2e6;
+  --grey-100: #eef1f3;
+  --paper: #f6f8f8;
+  --white: #ffffff;
+  --amber-500: #c8862a;
+  --red-500: #b3452f;
+
+  /* Type */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Scale */
+  --step-0: 1rem;
+  --step-1: 1.2rem;
+  --step-2: 1.5rem;
+  --step-3: 1.953rem;
+  --step-4: 2.5rem;
+  --step-5: 3.5rem;
+
+  /* Radius / motion */
+  --r-sm: 4px;
+  --r-md: 8px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--grey-800);
+  background: var(--paper);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0;
+  color: var(--navy-950);
+  letter-spacing: -0.01em;
+}
+
+p { margin: 0; }
+
+a { color: inherit; text-decoration: none; }
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+img { max-width: 100%; display: block; }
+
+:focus-visible {
+  outline: 2px solid var(--teal-500);
+  outline-offset: 2px;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+@media (max-width: 640px) {
+  .container { padding: 0 20px; }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: var(--r-sm);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.15s var(--ease), background 0.15s var(--ease), box-shadow 0.15s var(--ease);
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(1px); }
+
+.btn-teal {
+  background: var(--teal-500);
+  color: var(--white);
+}
+.btn-teal:hover { background: var(--teal-600); }
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  color: var(--white);
+}
+.btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+.btn-navy-outline {
+  background: transparent;
+  border: 1.5px solid var(--navy-800);
+  color: var(--navy-900);
+}
+.btn-navy-outline:hover { background: var(--navy-950); color: var(--white); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--navy-900);
+  padding: 10px 4px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.pill-teal { background: var(--teal-100); color: var(--teal-600); }
+.pill-amber { background: #f7ead4; color: var(--amber-500); }
+.pill-grey { background: var(--grey-100); color: var(--grey-600); }
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--teal-500);
+  color: white;
+  padding: 10px 16px;
+  z-index: 999;
+}
+.skip-link:focus { left: 12px; top: 12px; }
+
+
+/* ============================================================
+   WORKER PORTAL — auth screens + app shell
+   ============================================================ */
+
+.auth-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+}
+@media (max-width: 900px) {
+  .auth-shell { grid-template-columns: 1fr; }
+}
+
+.auth-side {
+  background: linear-gradient(175deg, var(--navy-950) 0%, var(--navy-900) 60%, var(--navy-800) 100%);
+  color: var(--white);
+  padding: 40px 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+@media (max-width: 900px) {
+  .auth-side { padding: 32px 24px; min-height: 220px; }
+}
+
+.auth-side::before {
+  content: "";
+  position: absolute;
+  left: -100px; bottom: -140px;
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, rgba(53,184,166,0.22), transparent 70%);
+}
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+.auth-brand .brand-mark {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: conic-gradient(from 200deg, var(--teal-400), var(--navy-700), var(--teal-400));
+}
+
+.auth-side-content {
+  position: relative;
+  z-index: 1;
+}
+.auth-side-content h2 {
+  color: var(--white);
+  font-size: 1.6rem;
+  line-height: 1.2;
+  max-width: 12ch;
+  margin-bottom: 16px;
+}
+.auth-side-content p {
+  color: var(--grey-200);
+  font-size: 0.95rem;
+  max-width: 32ch;
+  line-height: 1.55;
+}
+
+.auth-side-foot {
+  position: relative;
+  z-index: 1;
+  font-size: 0.82rem;
+  color: var(--grey-400);
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 18px;
+}
+
+.auth-main {
+  padding: 56px 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+}
+@media (max-width: 640px) {
+  .auth-main { padding: 40px 22px; }
+}
+
+.auth-form-wrap {
+  width: 100%;
+  max-width: 520px;
+}
+
+.auth-form-wrap > .form-head {
+  margin-bottom: 34px;
+}
+.form-head h1 {
+  font-size: 1.7rem;
+  margin-bottom: 8px;
+}
+.form-head p {
+  color: var(--grey-600);
+  font-size: 0.95rem;
+}
+.form-head p a { color: var(--teal-600); font-weight: 600; }
+
+/* ---- stepper ---- */
+.stepper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+  gap: 0;
+}
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+.step-item:last-child { flex: 0; }
+.step-circle {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border: 1.5px solid var(--grey-200);
+  color: var(--grey-400);
+  background: var(--white);
+  flex-shrink: 0;
+  transition: all 0.2s var(--ease);
+}
+.step-label {
+  font-size: 0.8rem;
+  color: var(--grey-400);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.step-line {
+  flex: 1;
+  height: 1.5px;
+  background: var(--grey-200);
+  margin: 0 8px;
+}
+.step-item.is-active .step-circle,
+.step-item.is-done .step-circle {
+  border-color: var(--teal-500);
+  color: var(--white);
+  background: var(--teal-500);
+}
+.step-item.is-active .step-label,
+.step-item.is-done .step-label { color: var(--navy-950); }
+.step-item.is-done .step-line { background: var(--teal-500); }
+
+@media (max-width: 640px) {
+  .step-label { display: none; }
+}
+
+/* ---- form fields ---- */
+.form-panel {
+  display: none;
+}
+.form-panel.is-active { display: block; }
+
+.panel-title-sm {
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+}
+.panel-sub {
+  color: var(--grey-600);
+  font-size: 0.88rem;
+  margin-bottom: 24px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+@media (max-width: 520px) {
+  .field-row { grid-template-columns: 1fr; }
+}
+
+.field {
+  margin-bottom: 18px;
+}
+.field label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy-950);
+  margin-bottom: 7px;
+}
+.field .hint {
+  font-size: 0.78rem;
+  color: var(--grey-400);
+  font-weight: 400;
+  margin-left: 4px;
+}
+.field input[type="text"],
+.field input[type="email"],
+.field input[type="tel"],
+.field input[type="password"],
+.field input[type="date"],
+.field input[type="number"],
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--grey-200);
+  border-radius: var(--r-sm);
+  font-family: var(--font-body);
+  font-size: 0.94rem;
+  color: var(--grey-800);
+  background: var(--white);
+  transition: border-color 0.15s var(--ease);
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--teal-500);
+  outline: none;
+}
+.field textarea { resize: vertical; min-height: 80px; }
+
+.chip-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+.chip-option {
+  border: 1.5px solid var(--grey-200);
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-size: 0.86rem;
+  color: var(--grey-600);
+  font-weight: 500;
+  transition: all 0.15s var(--ease);
+}
+.chip-option input { display: none; }
+.chip-option.is-checked {
+  border-color: var(--teal-500);
+  background: var(--teal-100);
+  color: var(--teal-600);
+}
+
+.upload-box {
+  border: 1.5px dashed var(--grey-200);
+  border-radius: var(--r-md);
+  padding: 22px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease);
+}
+.upload-box:hover { border-color: var(--teal-400); }
+.upload-icon {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: var(--teal-100);
+  color: var(--teal-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+.upload-box .upload-text strong { display: block; font-size: 0.88rem; color: var(--navy-950); }
+.upload-box .upload-text span { font-size: 0.78rem; color: var(--grey-400); }
+.upload-box input[type="file"] { display: none; }
+.upload-box.has-file { border-color: var(--teal-500); background: var(--teal-100); }
+
+.verify-note {
+  display: flex;
+  gap: 12px;
+  background: var(--grey-100);
+  border-radius: var(--r-md);
+  padding: 16px 18px;
+  margin-top: 4px;
+  margin-bottom: 24px;
+}
+.verify-note .icon { color: var(--teal-600); font-size: 1.1rem; flex-shrink: 0; }
+.verify-note p { font-size: 0.85rem; color: var(--grey-600); line-height: 1.5; }
+.verify-note strong { color: var(--navy-950); }
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--grey-200);
+}
+
+.review-block {
+  background: var(--grey-100);
+  border-radius: var(--r-md);
+  padding: 20px 22px;
+  margin-bottom: 14px;
+}
+.review-block h4 {
+  font-size: 0.82rem;
+  text-transform: none;
+  color: var(--teal-600);
+  margin-bottom: 12px;
+  font-family: var(--font-body);
+  font-weight: 700;
+}
+.review-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.88rem;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--grey-200);
+}
+.review-line:last-child { border-bottom: none; }
+.review-line span:first-child { color: var(--grey-600); }
+.review-line span:last-child { color: var(--navy-950); font-weight: 500; text-align: right; }
+
+.consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: var(--grey-600);
+  margin-top: 20px;
+}
+.consent-row input { margin-top: 3px; }
+
+/* ---- success screen ---- */
+.success-screen { text-align: center; padding: 24px 0; }
+.success-badge {
+  width: 62px; height: 62px;
+  border-radius: 50%;
+  background: var(--teal-100);
+  color: var(--teal-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin: 0 auto 22px;
+}
+.success-screen h2 { font-size: 1.4rem; margin-bottom: 10px; }
+.success-screen p { color: var(--grey-600); max-width: 40ch; margin: 0 auto 26px; font-size: 0.92rem; }
+
+/* ============================================================
+   APP SHELL (dashboard)
+   ============================================================ */
+.app-shell {
+  display: grid;
+  grid-template-columns: 256px 1fr;
+  min-height: 100vh;
+}
+@media (max-width: 860px) {
+  .app-shell { grid-template-columns: 1fr; }
+}
+
+.app-sidebar {
+  background: var(--navy-950);
+  color: var(--white);
+  padding: 26px 20px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+@media (max-width: 860px) {
+  .app-sidebar { position: relative; height: auto; }
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.02rem;
+  padding: 0 8px 26px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-nav { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: var(--r-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--grey-200);
+  width: 100%;
+  text-align: left;
+  transition: background 0.15s var(--ease);
+}
+.nav-item .nav-icon {
+  width: 18px; text-align: center; flex-shrink: 0; opacity: 0.85;
+}
+.nav-item:hover { background: rgba(255,255,255,0.06); }
+.nav-item.is-active {
+  background: var(--teal-500);
+  color: var(--white);
+}
+.nav-item .badge-dot {
+  margin-left: auto;
+  background: var(--amber-500);
+  color: var(--white);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 999px;
+}
+
+.sidebar-foot {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.avatar-sm {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--teal-500);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.sidebar-foot .who { flex: 1; min-width: 0; }
+.sidebar-foot .who strong { display: block; font-size: 0.85rem; }
+.sidebar-foot .who span { font-size: 0.74rem; color: var(--grey-400); }
+.sidebar-foot .logout-btn { color: var(--grey-400); font-size: 0.85rem; }
+.sidebar-foot .logout-btn:hover { color: var(--white); }
+
+.app-main {
+  padding: 34px 44px 60px;
+  max-width: 1080px;
+}
+@media (max-width: 640px) {
+  .app-main { padding: 26px 20px 48px; }
+}
+
+.app-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.app-topbar h1 { font-size: 1.55rem; }
+.app-topbar .sub { color: var(--grey-600); font-size: 0.92rem; margin-top: 6px; }
+
+.lang-select {
+  border: 1.5px solid var(--grey-200);
+  border-radius: var(--r-sm);
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  color: var(--navy-950);
+  background: var(--white);
+}
+
+/* view panels */
+.view-panel { display: none; }
+.view-panel.is-active { display: block; }
+
+/* summary stat row */
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--grey-200);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  margin-bottom: 34px;
+  background: var(--white);
+}
+@media (max-width: 760px) {
+  .stat-strip { grid-template-columns: repeat(2, 1fr); }
+}
+.stat-cell {
+  padding: 18px 20px;
+  border-right: 1px solid var(--grey-200);
+}
+.stat-cell:last-child { border-right: none; }
+.stat-cell .num {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  color: var(--navy-950);
+  display: block;
+}
+.stat-cell .lbl { font-size: 0.8rem; color: var(--grey-600); margin-top: 4px; display: block; }
+.stat-cell.accent .num { color: var(--teal-600); }
+
+/* section blocks */
+.section-block { margin-bottom: 40px; }
+.block-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+}
+.block-head h2 { font-size: 1.15rem; }
+.block-head .link { font-size: 0.85rem; color: var(--teal-600); font-weight: 600; }
+
+/* job list rows */
+.job-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 18px;
+  border: 1px solid var(--grey-200);
+  border-left: 3px solid var(--teal-500);
+  border-radius: var(--r-sm);
+  background: var(--white);
+  margin-bottom: 10px;
+}
+.job-row.urgent { border-left-color: var(--red-500); }
+.job-icon {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--teal-100);
+  color: var(--teal-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.job-row.urgent .job-icon { background: #f6e2dc; color: var(--red-500); }
+.job-info { flex: 1; min-width: 0; }
+.job-info .title { font-weight: 600; font-size: 0.94rem; color: var(--navy-950); }
+.job-info .meta { font-size: 0.82rem; color: var(--grey-600); margin-top: 3px; }
+.job-price { text-align: right; }
+.job-price .amount { font-weight: 700; color: var(--navy-950); font-size: 0.98rem; }
+.job-price .dist { font-size: 0.78rem; color: var(--grey-400); }
+.job-accept {
+  background: var(--navy-950);
+  color: var(--white);
+  padding: 9px 16px;
+  border-radius: var(--r-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.job-accept:hover { background: var(--teal-600); }
+
+@media (max-width: 640px) {
+  .job-row { flex-wrap: wrap; }
+  .job-price { order: 3; text-align: left; }
+}
+
+/* training + welfare cards */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 760px) {
+  .two-col { grid-template-columns: 1fr; }
+}
+
+.info-card {
+  border: 1px solid var(--grey-200);
+  border-radius: var(--r-md);
+  padding: 22px 24px;
+  background: var(--white);
+}
+.info-card h3 { font-size: 1rem; margin-bottom: 6px; }
+.info-card .desc { font-size: 0.86rem; color: var(--grey-600); margin-bottom: 16px; line-height: 1.5; }
+
+.training-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid var(--grey-100);
+  font-size: 0.88rem;
+}
+.training-item:first-of-type { border-top: none; }
+.training-item .name { color: var(--navy-950); font-weight: 500; }
+.training-item .dur { color: var(--grey-400); font-size: 0.78rem; }
+
+.welfare-balance {
+  background: var(--navy-950);
+  color: var(--white);
+  border-radius: var(--r-md);
+  padding: 22px 24px;
+  margin-bottom: 16px;
+}
+.welfare-balance .lbl { font-size: 0.8rem; color: var(--grey-200); }
+.welfare-balance .amt { font-family: var(--font-display); font-size: 1.9rem; margin: 6px 0 2px; }
+.welfare-balance .note { font-size: 0.78rem; color: var(--grey-400); }
+
+/* history table */
+.history-table { width: 100%; border-collapse: collapse; }
+.history-table th {
+  text-align: left;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--grey-400);
+  padding: 10px 14px;
+  border-bottom: 1.5px solid var(--grey-200);
+  font-weight: 600;
+}
+.history-table td {
+  padding: 14px 14px;
+  border-bottom: 1px solid var(--grey-100);
+  font-size: 0.87rem;
+  color: var(--grey-800);
+}
+.history-table tr:last-child td { border-bottom: none; }
+.history-table .amt-cell { font-weight: 700; color: var(--navy-950); }
+.history-table .extra { color: var(--teal-600); font-size: 0.78rem; display: block; margin-top: 2px; }
+
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--r-sm);
+  padding: 4px;
+  width: fit-content;
+}
+.filter-tab {
+  padding: 7px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--grey-600);
+  border-radius: 4px;
+}
+.filter-tab.is-active { background: var(--navy-950); color: var(--white); }
+
+/* construction placeholder */
+.construction-panel {
+  text-align: center;
+  padding: 90px 20px;
+  border: 1px dashed var(--grey-200);
+  border-radius: var(--r-md);
+  background: var(--white);
+}
+.construction-panel .icon {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--teal-100);
+  color: var(--teal-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin: 0 auto 20px;
+}
+.construction-panel h2 { font-size: 1.2rem; margin-bottom: 8px; }
+.construction-panel p { color: var(--grey-600); font-size: 0.9rem; max-width: 38ch; margin: 0 auto; }
+
+/* modal */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(8,20,32,0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 20px;
+}
+.modal-overlay.is-open { display: flex; }
+.modal-box {
+  background: var(--white);
+  border-radius: var(--r-md);
+  max-width: 460px;
+  width: 100%;
+  padding: 30px;
+}
+.modal-box h3 { font-size: 1.1rem; margin-bottom: 8px; }
+.modal-box p { font-size: 0.88rem; color: var(--grey-600); margin-bottom: 20px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 22px; }
+
+
+/* ============================================================
+   COMMUNITY PAGE
+   ============================================================ */
+
+.ctop-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.02rem;
+  color: var(--navy-950);
+}
+.ctop-brand .brand-mark {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: conic-gradient(from 200deg, var(--teal-400), var(--navy-700), var(--teal-400));
+}
+
+.community-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 36px 40px 80px;
+}
+@media (max-width: 640px) {
+  .community-wrap { padding: 26px 20px 60px; }
+}
+
+.community-head-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.top-anchor-nav {
+  display: flex;
+  gap: 28px;
+}
+.top-anchor-nav a {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--grey-400);
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+}
+.top-anchor-nav a.is-active {
+  color: var(--navy-950);
+  border-color: var(--teal-500);
+}
+.top-anchor-nav a:hover:not(.is-active) { color: var(--navy-950); }
+
+.community-head {
+  margin-bottom: 30px;
+  padding-bottom: 26px;
+  border-bottom: 1px solid var(--grey-200);
+}
+.community-head h1 { font-size: 1.6rem; }
+.community-head p { color: var(--grey-600); font-size: 0.94rem; margin-top: 6px; }
+
+/* stacked page blocks, scroll straight through */
+.page-block {
+  margin-bottom: 56px;
+}
+.page-block .block-head { margin-bottom: 18px; }
+.page-block .block-head h2 { font-size: 1.2rem; }
+
+/* ---------------- CHAT ---------------- */
+.chat-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--white);
+  min-height: 560px;
+}
+@media (max-width: 760px) {
+  .chat-layout { grid-template-columns: 1fr; min-height: unset; }
+}
+
+.chat-channels {
+  background: var(--grey-100);
+  border-right: 1px solid var(--grey-200);
+  padding: 18px 12px;
+}
+.channels-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--grey-400);
+  padding: 0 10px;
+  margin-bottom: 10px;
+  display: block;
+}
+.channel-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 10px;
+  border-radius: var(--r-sm);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--grey-600);
+  margin-bottom: 2px;
+}
+.channel-item .chan-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--grey-400);
+  flex-shrink: 0;
+}
+.channel-item.is-active {
+  background: var(--navy-950);
+  color: var(--white);
+}
+.channel-item.is-active .chan-dot { background: var(--teal-400); }
+.channel-item:hover:not(.is-active) { background: var(--grey-200); }
+
+.chat-panel { display: flex; flex-direction: column; height: 100%; }
+
+.chat-head {
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--grey-200);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.chat-head-title { display: flex; align-items: center; gap: 10px; }
+.chat-head-title .cat-emoji {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--teal-100);
+  color: var(--teal-600);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.95rem;
+}
+.chat-head-title h3 { font-size: 1rem; }
+.chat-head-title span { font-size: 0.78rem; color: var(--grey-400); }
+
+.head-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--grey-100);
+  border-radius: 999px;
+  padding: 6px 14px 6px 6px;
+  font-size: 0.78rem;
+}
+.head-badge .avatar-sm { width: 26px; height: 26px; font-size: 0.7rem; }
+.head-badge strong { color: var(--navy-950); font-weight: 700; }
+.head-badge .approval { color: var(--teal-600); font-weight: 600; }
+
+.chat-body {
+  flex: 1;
+  padding: 20px 22px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 460px;
+}
+
+.msg { display: flex; gap: 12px; max-width: 78%; }
+.msg .avatar-sm { flex-shrink: 0; width: 32px; height: 32px; font-size: 0.72rem; }
+.msg-body .msg-meta { font-size: 0.76rem; color: var(--grey-400); margin-bottom: 4px; }
+.msg-body .msg-meta strong { color: var(--navy-950); font-weight: 700; margin-right: 6px; }
+.msg-bubble {
+  background: var(--grey-100);
+  padding: 10px 14px;
+  border-radius: 4px 14px 14px 14px;
+  font-size: 0.88rem;
+  color: var(--grey-800);
+  line-height: 1.5;
+}
+.msg.is-head .msg-bubble { background: var(--teal-100); }
+.msg.is-self { margin-left: auto; flex-direction: row-reverse; }
+.msg.is-self .msg-bubble { background: var(--navy-950); color: var(--white); border-radius: 14px 4px 14px 14px; }
+.msg.is-self .msg-meta { text-align: right; }
+
+.chat-input-row {
+  padding: 14px 22px;
+  border-top: 1px solid var(--grey-200);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.chat-input-row input {
+  flex: 1;
+  border: 1.5px solid var(--grey-200);
+  border-radius: 999px;
+  padding: 11px 18px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+}
+.chat-input-row input:focus { border-color: var(--teal-500); outline: none; }
+.chat-send {
+  background: var(--teal-500);
+  color: var(--white);
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+.chat-send:hover { background: var(--teal-600); }
+
+/* ---------------- RAISE QUERY ---------------- */
+.raise-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 28px;
+}
+@media (max-width: 860px) {
+  .raise-grid { grid-template-columns: 1fr; }
+}
+
+.query-type-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 22px;
+}
+@media (max-width: 520px) {
+  .query-type-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.qtype-option {
+  border: 1.5px solid var(--grey-200);
+  border-radius: var(--r-md);
+  padding: 14px 12px;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--grey-600);
+  transition: all 0.15s var(--ease);
+}
+.qtype-option input { display: none; }
+.qtype-option .qicon { display: block; font-size: 1.2rem; margin-bottom: 6px; }
+.qtype-option.is-checked {
+  border-color: var(--teal-500);
+  background: var(--teal-100);
+  color: var(--teal-600);
+}
+
+.pipeline-preview {
+  background: var(--grey-100);
+  border-radius: var(--r-md);
+  padding: 20px 22px;
+}
+.pipeline-preview h4 { font-size: 0.85rem; margin-bottom: 14px; color: var(--navy-950); }
+.mini-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: var(--grey-600);
+  padding: 7px 0;
+}
+.mini-step .n {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1.5px solid var(--grey-200);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--grey-400);
+  flex-shrink: 0;
+}
+
+/* ---------------- MY QUERIES / pipeline stepper ---------------- */
+.query-card {
+  border: 1px solid var(--grey-200);
+  border-radius: var(--r-md);
+  padding: 22px 24px;
+  background: var(--white);
+  margin-bottom: 18px;
+}
+.query-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.query-card-head h3 { font-size: 1rem; margin-bottom: 4px; }
+.query-card-head .meta { font-size: 0.8rem; color: var(--grey-400); }
+
+.qstepper {
+  display: flex;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.qstep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 108px;
+  position: relative;
+  text-align: center;
+}
+.qstep .qdot {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--grey-200);
+  color: var(--grey-400);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  z-index: 1;
+}
+.qstep .qline {
+  position: absolute;
+  top: 13px; left: 50%;
+  width: 100%; height: 2px;
+  background: var(--grey-200);
+  z-index: 0;
+}
+.qstep:last-child .qline { display: none; }
+.qstep .qlabel {
+  font-size: 0.72rem;
+  color: var(--grey-400);
+  font-weight: 600;
+  margin-top: 8px;
+  max-width: 92px;
+  line-height: 1.3;
+}
+.qstep .qvote {
+  font-size: 0.7rem;
+  color: var(--teal-600);
+  font-weight: 700;
+  margin-top: 3px;
+}
+
+.qstep.is-done .qdot { background: var(--teal-500); border-color: var(--teal-500); color: var(--white); }
+.qstep.is-done .qline { background: var(--teal-500); }
+.qstep.is-done .qlabel { color: var(--navy-950); }
+
+.qstep.is-current .qdot { background: var(--navy-950); border-color: var(--navy-950); color: var(--white); }
+.qstep.is-current .qlabel { color: var(--navy-950); }
+
+.query-status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--grey-100);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.query-status-row .desc { font-size: 0.85rem; color: var(--grey-600); max-width: 60ch; }
+
+/* ---------------- WELFARE FUND ---------------- */
+.fund-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 24px;
+}
+@media (max-width: 860px) {
+  .fund-grid { grid-template-columns: 1fr; }
+}
+
+.fund-balance-card {
+  background: linear-gradient(160deg, var(--navy-950) 0%, var(--navy-800) 100%);
+  color: var(--white);
+  border-radius: var(--r-md);
+  padding: 30px 28px;
+  position: relative;
+  overflow: hidden;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.fund-balance-card::before {
+  content: "";
+  position: absolute;
+  right: -60px; top: -60px;
+  width: 220px; height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(53,184,166,0.25), transparent 70%);
+}
+.fund-balance-card .lbl { font-size: 0.9rem; color: var(--grey-200); position: relative; z-index: 1; }
+.fund-balance-card .amt { font-family: var(--font-display); font-size: 3rem; position: relative; z-index: 1; }
+
+.fund-balance-simple .amt { margin: 8px 0 0; }
+
+.fund-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 760px) {
+  .fund-two-col { grid-template-columns: 1fr; }
+}
+
+.disburse-heading {
+  font-size: 1rem;
+  margin-bottom: 14px;
+  color: var(--navy-950);
+}
+
+/* ---------------- PLATFORM HEADS ---------------- */
+.heads-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 900px) {
+  .heads-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .heads-grid { grid-template-columns: 1fr; }
+}
+
+.head-card {
+  border: 1px solid var(--grey-200);
+  border-radius: var(--r-md);
+  padding: 20px 22px;
+  background: var(--white);
+}
+.head-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.head-avatar { background: var(--navy-950); width: 36px; height: 36px; }
+.head-card h3 { font-size: 1rem; margin-bottom: 4px; }
+.head-term { font-size: 0.78rem; color: var(--grey-400); margin-bottom: 16px; }
+.head-stat {
+  border-top: 1px solid var(--grey-100);
+  padding-top: 14px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.head-stat .count {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--navy-950);
+}
+.head-stat .count-label {
+  font-size: 0.78rem;
+  color: var(--grey-600);
+}
+
+.head-card-others {
+  cursor: pointer;
+  transition: border-color 0.15s var(--ease), background 0.15s var(--ease);
+}
+.head-card-others:hover { border-color: var(--teal-400); background: var(--teal-100); }
+.head-card-others .head-avatar { background: var(--teal-500); }
+.head-card-others .head-stat { border-top: none; padding-top: 0; }
+.head-card-others #othersToggleLabel { color: var(--teal-600); font-weight: 600; }
+
+.others-panel {
+  display: none;
+  margin-top: 16px;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--r-md);
+  background: var(--white);
+  overflow: hidden;
+}
+.others-panel.is-open { display: block; }
+
+.others-row {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr 1fr;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--grey-100);
+  font-size: 0.86rem;
+}
+.others-row:last-child { border-bottom: none; }
+.others-cat { font-weight: 700; color: var(--navy-950); }
+.others-head { color: var(--grey-800); }
+.others-since { color: var(--grey-400); font-size: 0.78rem; margin-left: 4px; }
+.others-count { color: var(--grey-600); text-align: right; }
+
+@media (max-width: 640px) {
+  .others-row { grid-template-columns: 1fr; text-align: left; gap: 2px; }
+  .others-count { text-align: left; }
+}
+
+.recipient-list { display: flex; flex-direction: column; gap: 12px; }
+.recipient-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  background: var(--white);
+}
+.recipient-item .avatar-sm { background: var(--navy-800); }
+.recipient-info { flex: 1; }
+.recipient-info .name { font-size: 0.9rem; font-weight: 600; color: var(--navy-950); }
+.recipient-info .reason { font-size: 0.78rem; color: var(--grey-600); margin-top: 2px; }
+.recipient-amt { font-weight: 700; color: var(--teal-600); font-size: 0.92rem; }
+
+</style>
+</head>
+<body>
+
+<!-- ================= MAIN SCROLL PAGE ================= -->
+<div id="mainPage">
+
+  <div class="community-wrap">
+
+    <div class="community-head">
+      <div class="community-head-row">
+        <div class="ctop-brand"><span class="brand-mark" aria-hidden="true"></span> Sahakari Seva</div>
+        <nav class="top-anchor-nav">
+          <a href="dashboard.html">Dashboard</a>
+          <a href="#" class="is-active">Community</a>
+        </nav>
+        <div class="avatar-sm">MK</div>
+      </div>
+      <h1 style="margin-top:22px;">Community</h1>
+      <p>Talk to your trade, track your queries, and check the welfare fund — all in one place.</p>
+    </div>
+
+    <!-- ================= CHAT ================= -->
+    <section class="page-block">
+      <div class="block-head"><h2>Chatrooms</h2></div>
+
+      <div class="chat-layout">
+        <aside class="chat-channels">
+          <span class="channels-label">YOUR TRADE</span>
+          <button class="channel-item is-active" data-channel="electrician">
+            <span class="chan-dot"></span> Electricians
+          </button>
+
+          <span class="channels-label" style="margin-top:18px;">PLATFORM-WIDE</span>
+          <button class="channel-item" data-channel="all">
+            <span class="chan-dot"></span> All workers
+          </button>
+        </aside>
+
+        <div class="chat-panel">
+          <div class="chat-head">
+            <div class="chat-head-title">
+              <span class="cat-emoji" id="chatEmoji">⚡</span>
+              <div>
+                <h3 id="chatTitle">Electricians</h3>
+                <span id="chatSubtitle">312 members · your trade channel</span>
+              </div>
+            </div>
+            <div class="head-badge" id="headBadge">
+              <div class="avatar-sm">RM</div>
+              <div>
+                Category head: <strong>Rajesh M.</strong><br>
+                <span class="approval">68% approval</span> · next election in 45 days
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-body" id="chatBody">
+            <div class="msg">
+              <div class="avatar-sm">SV</div>
+              <div class="msg-body">
+                <div class="msg-meta"><strong>Selvam K.</strong>9:02 AM</div>
+                <div class="msg-bubble">Anyone else getting flagged for using non-standard MCBs on the client app? Happened twice this week.</div>
+              </div>
+            </div>
+            <div class="msg is-head">
+              <div class="avatar-sm">RM</div>
+              <div class="msg-body">
+                <div class="msg-meta"><strong>Rajesh M.</strong> · Category Head 9:11 AM</div>
+                <div class="msg-bubble">Yes — three people have raised this. I'm turning it into a formal query today so we can push it through governance instead of it staying informal.</div>
+              </div>
+            </div>
+            <div class="msg">
+              <div class="avatar-sm">PK</div>
+              <div class="msg-body">
+                <div class="msg-meta"><strong>Prakash R.</strong>9:14 AM</div>
+                <div class="msg-bubble">Good. Also — training slot for solar wiring on Saturday, is that still on?</div>
+              </div>
+            </div>
+            <div class="msg is-self">
+              <div class="avatar-sm">MK</div>
+              <div class="msg-body">
+                <div class="msg-meta">You 9:20 AM</div>
+                <div class="msg-bubble">Yes, confirmed 10 AM. I've signed up already.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-input-row">
+            <input type="text" placeholder="Message #electricians…" id="chatInput">
+            <button class="chat-send" id="chatSendBtn">➤</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= QUERIES ================= -->
+    <section class="page-block">
+      <div class="block-head">
+        <h2>My queries</h2>
+        <button class="btn btn-teal" id="openRaiseBtn">+ Raise a query</button>
+      </div>
+
+      <div id="queryList">
+
+        <!-- Query 1: Fulfilled -->
+        <div class="query-card">
+          <div class="query-card-head">
+            <div>
+              <h3>Compensation for damaged tools on emergency job</h3>
+              <span class="meta">Welfare Fund · Raised 22 Jul 2026 · #WF-2201</span>
+            </div>
+            <span class="pill pill-teal">Fulfilled</span>
+          </div>
+          <div class="qstepper">
+            <div class="qstep is-done"><div class="qline"></div><div class="qdot">✓</div><span class="qlabel">Category head</span></div>
+            <div class="qstep is-done"><div class="qline"></div><div class="qdot">✓</div><span class="qlabel">Round 1 vote</span><span class="qvote">81%</span></div>
+            <div class="qstep is-done"><div class="qline"></div><div class="qdot">✓</div><span class="qlabel">Union meeting</span></div>
+            <div class="qstep is-done"><div class="qline"></div><div class="qdot">✓</div><span class="qlabel">Round 2 vote</span><span class="qvote">72%</span></div>
+            <div class="qstep is-done"><div class="qline"></div><div class="qdot">✓</div><span class="qlabel">Platform owner</span></div>
+            <div class="qstep is-done"><div class="qdot">✓</div><span class="qlabel">Fulfilled</span></div>
+          </div>
+          <div class="query-status-row">
+            <p class="desc">₹2,400 released toward tool replacement after a short-circuit incident on an emergency job.</p>
+            <span class="pill pill-grey">Closed 4 Aug 2026</span>
+          </div>
+        </div>
+
+        <!-- Query 2: Fulfilled -->
+        <div class="query-card">
+          <div class="query-card-head">
+            <div>
+              <h3>Request to review distance-based job weighting</h3>
+              <span class="meta">Algorithm Change · Raised 2 Jun 2026 · #AL-1187</span>
+            </div>
+            <span class="pill pill-teal">Fulfilled</span>
+          </div>
+          <div class="qstepper">
+            <div class="qstep is-done"><div class="qline"></div><div class="qdot">✓</div><span class="qlabel">Category head</span></div>
+            <div class="qstep is-done"><div class="qline"></div><div class="qdot">✓</div><span class="qlabel">Round 1 vote</span><span class="qvote">76%</span></div>
+            <div class="qstep is-done"><div class="qline"></div><div class="qdot">✓</div><span class="qlabel">Union meeting</span></div>
+            <div class="qstep is-done"><div class="qline"></div><div class="qdot">✓</div><span class="qlabel">Round 2 vote</span><span class="qvote">63%</span></div>
+            <div class="qstep is-done"><div class="qline"></div><div class="qdot">✓</div><span class="qlabel">Platform owner</span></div>
+            <div class="qstep is-done"><div class="qdot">✓</div><span class="qlabel">Fulfilled</span></div>
+          </div>
+          <div class="query-status-row">
+            <p class="desc">Allocation algorithm updated to weight travel distance 20% more heavily for jobs under ₹500.</p>
+            <span class="pill pill-grey">Closed 19 Jun 2026</span>
+          </div>
+        </div>
+
+        <!-- Query 3: In Round 2 voting -->
+        <div class="query-card">
+          <div class="query-card-head">
+            <div>
+              <h3>Dispute over disputed job payment — Peelamedu client</h3>
+              <span class="meta">Platform Problem · Raised 24 Aug 2026 · #PP-2340</span>
+            </div>
+            <span class="pill pill-amber">In Round 2 voting</span>
+          </div>
+          <div class="qstepper">
+            <div class="qstep is-done"><div class="qline"></div><div class="qdot">✓</div><span class="qlabel">Category head</span></div>
+            <div class="qstep is-done"><div class="qline"></div><div class="qdot">✓</div><span class="qlabel">Round 1 vote</span><span class="qvote">64%</span></div>
+            <div class="qstep is-done"><div class="qline"></div><div class="qdot">✓</div><span class="qlabel">Union meeting</span></div>
+            <div class="qstep is-current"><div class="qline"></div><div class="qdot">4</div><span class="qlabel">Round 2 vote</span><span class="qvote">58% so far</span></div>
+            <div class="qstep"><div class="qline"></div><div class="qdot">5</div><span class="qlabel">Platform owner</span></div>
+            <div class="qstep"><div class="qdot">6</div><span class="qlabel">Fulfilled</span></div>
+          </div>
+          <div class="query-status-row">
+            <p class="desc">Category heads are currently voting on whether the disputed ₹700 job payment should be honoured in full.</p>
+            <span class="pill pill-grey">Voting closes in 2 days</span>
+          </div>
+        </div>
+
+        <!-- Query 4: Just raised -->
+        <div class="query-card">
+          <div class="query-card-head">
+            <div>
+              <h3>Request for hearing-aid compatible job alerts</h3>
+              <span class="meta">Other · Raised today · #OT-2412</span>
+            </div>
+            <span class="pill pill-grey">Awaiting category head</span>
+          </div>
+          <div class="qstepper">
+            <div class="qstep is-current"><div class="qline"></div><div class="qdot">1</div><span class="qlabel">Category head</span></div>
+            <div class="qstep"><div class="qline"></div><div class="qdot">2</div><span class="qlabel">Round 1 vote</span></div>
+            <div class="qstep"><div class="qline"></div><div class="qdot">3</div><span class="qlabel">Union meeting</span></div>
+            <div class="qstep"><div class="qline"></div><div class="qdot">4</div><span class="qlabel">Round 2 vote</span></div>
+            <div class="qstep"><div class="qline"></div><div class="qdot">5</div><span class="qlabel">Platform owner</span></div>
+            <div class="qstep"><div class="qdot">6</div><span class="qlabel">Fulfilled</span></div>
+          </div>
+          <div class="query-status-row">
+            <p class="desc">Submitted a few hours ago — waiting for Rajesh M. (category head) to review and forward to Round 1 voting.</p>
+            <span class="pill pill-grey">Just now</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= PLATFORM HEADS ================= -->
+    <section class="page-block">
+      <div class="block-head"><h2>Platform heads</h2></div>
+
+      <div class="heads-grid">
+        <div class="head-card">
+          <div class="head-card-top">
+            <div class="avatar-sm head-avatar">RM</div>
+            <span class="pill pill-teal">Electrical</span>
+          </div>
+          <h3>Rajesh M.</h3>
+          <p class="head-term">Serving since Mar 2026 · term ends Mar 2027</p>
+          <div class="head-stat">
+            <span class="count">323</span>
+            <span class="count-label">electricians represented</span>
+          </div>
+        </div>
+
+        <div class="head-card">
+          <div class="head-card-top">
+            <div class="avatar-sm head-avatar">KR</div>
+            <span class="pill pill-teal">Plumbing</span>
+          </div>
+          <h3>Kavitha R.</h3>
+          <p class="head-term">Serving since Jan 2026 · term ends Jan 2027</p>
+          <div class="head-stat">
+            <span class="count">204</span>
+            <span class="count-label">plumbers represented</span>
+          </div>
+        </div>
+
+        <div class="head-card">
+          <div class="head-card-top">
+            <div class="avatar-sm head-avatar">MS</div>
+            <span class="pill pill-teal">Domestic Help</span>
+          </div>
+          <h3>Meena S.</h3>
+          <p class="head-term">Serving since May 2026 · term ends May 2027</p>
+          <div class="head-stat">
+            <span class="count">456</span>
+            <span class="count-label">domestic workers represented</span>
+          </div>
+        </div>
+
+        <div class="head-card">
+          <div class="head-card-top">
+            <div class="avatar-sm head-avatar">AP</div>
+            <span class="pill pill-teal">Caregiving</span>
+          </div>
+          <h3>Anitha P.</h3>
+          <p class="head-term">Serving since Feb 2026 · term ends Feb 2027</p>
+          <div class="head-stat">
+            <span class="count">168</span>
+            <span class="count-label">caregivers represented</span>
+          </div>
+        </div>
+
+        <div class="head-card head-card-others" id="othersToggle">
+          <div class="head-card-top">
+            <div class="avatar-sm head-avatar">＋</div>
+            <span class="pill pill-grey">6 more</span>
+          </div>
+          <h3>Other categories</h3>
+          <p class="head-term">Carpentry, painting, driving, gardening, cleaning &amp; technicians</p>
+          <div class="head-stat">
+            <span class="count-label" id="othersToggleLabel">Click to view all heads →</span>
+          </div>
+        </div>
+
+        <div class="head-card">
+          <div class="head-card-top">
+            <div class="avatar-sm head-avatar">FC</div>
+            <span class="pill pill-grey">Federation</span>
+          </div>
+          <h3>Federation Council</h3>
+          <p class="head-term">Rotating monthly chair · all categories</p>
+          <div class="head-stat">
+            <span class="count">1,840</span>
+            <span class="count-label">workers platform-wide</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="others-panel" id="othersPanel">
+        <div class="others-row">
+          <span class="others-cat">Carpentry</span>
+          <span class="others-head">Suresh D. <span class="others-since">since Apr 2026</span></span>
+          <span class="others-count">142 carpenters</span>
+        </div>
+        <div class="others-row">
+          <span class="others-cat">Painting</span>
+          <span class="others-head">Devika N. <span class="others-since">since Jun 2026</span></span>
+          <span class="others-count">98 painters</span>
+        </div>
+        <div class="others-row">
+          <span class="others-cat">Driving</span>
+          <span class="others-head">Balaji T. <span class="others-since">since Feb 2026</span></span>
+          <span class="others-count">176 drivers</span>
+        </div>
+        <div class="others-row">
+          <span class="others-cat">Gardening</span>
+          <span class="others-head">Muthu K. <span class="others-since">since May 2026</span></span>
+          <span class="others-count">87 gardeners</span>
+        </div>
+        <div class="others-row">
+          <span class="others-cat">Cleaning</span>
+          <span class="others-head">Revathi S. <span class="others-since">since Mar 2026</span></span>
+          <span class="others-count">231 cleaners</span>
+        </div>
+        <div class="others-row">
+          <span class="others-cat">Technicians</span>
+          <span class="others-head">Naveen J. <span class="others-since">since Jul 2026</span></span>
+          <span class="others-count">119 technicians</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WELFARE FUND ================= -->
+    <section class="page-block">
+      <div class="block-head"><h2>Welfare fund</h2></div>
+
+      <div class="fund-two-col">
+        <div class="fund-balance-card fund-balance-simple">
+          <span class="lbl">Platform-wide welfare fund balance</span>
+          <div class="amt">₹18,42,600</div>
+        </div>
+
+        <div class="fund-log-col">
+          <h3 class="disburse-heading">Fund disbursement log</h3>
+          <div class="recipient-list">
+            <div class="recipient-item">
+              <div class="avatar-sm">GD</div>
+              <div class="recipient-info">
+                <div class="name">Ganesh D. — Plumber</div>
+                <div class="reason">Medical emergency — surgery cost support</div>
+              </div>
+              <div class="recipient-amt">₹8,000</div>
+            </div>
+            <div class="recipient-item">
+              <div class="avatar-sm">LS</div>
+              <div class="recipient-info">
+                <div class="name">Lakshmi S. — Domestic help</div>
+                <div class="reason">Loss of income — hospitalised family member</div>
+              </div>
+              <div class="recipient-amt">₹5,500</div>
+            </div>
+            <div class="recipient-item">
+              <div class="avatar-sm">AV</div>
+              <div class="recipient-info">
+                <div class="name">Arun V. — Electrician</div>
+                <div class="reason">Injury on job — insurance top-up</div>
+              </div>
+              <div class="recipient-amt">₹6,200</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ================= RAISE QUERY PAGE ================= -->
+<div id="raisePage" style="display:none;">
+  <div class="community-wrap">
+    <button class="btn btn-ghost" id="backToMainBtn" style="margin-bottom: 18px;">← Back to community</button>
+
+    <div class="community-head">
+      <h1>Raise a query</h1>
+      <p>Submit a formal query — it goes to your category head first, then through governance.</p>
+    </div>
+
+    <div class="raise-grid" style="margin-top:28px;">
+      <div>
+        <div class="field">
+          <label>Query type</label>
+          <div class="query-type-grid" id="queryTypeGrid">
+            <label class="qtype-option"><input type="radio" name="qtype" value="Welfare Fund"><span class="qicon">🩹</span>Welfare fund</label>
+            <label class="qtype-option"><input type="radio" name="qtype" value="Insurance"><span class="qicon">🛡</span>Insurance</label>
+            <label class="qtype-option"><input type="radio" name="qtype" value="Platform Problem"><span class="qicon">⚙</span>Platform problem</label>
+            <label class="qtype-option"><input type="radio" name="qtype" value="Algorithm Change"><span class="qicon">🔀</span>Algorithm change</label>
+            <label class="qtype-option"><input type="radio" name="qtype" value="Leader Problem"><span class="qicon">👤</span>Leader problem</label>
+            <label class="qtype-option"><input type="radio" name="qtype" value="Other"><span class="qicon">✎</span>Other</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="queryTitle">Short title</label>
+          <input type="text" id="queryTitle" placeholder="e.g. Unfair job allocation this week">
+        </div>
+
+        <div class="field">
+          <label for="queryDesc">Description</label>
+          <textarea id="queryDesc" rows="5" placeholder="Explain your situation clearly — this is what your category head and other electricians will see."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Attach a file <span class="hint">optional — photo, bill, or document</span></label>
+          <label class="upload-box" id="queryUploadBox">
+            <span class="upload-icon">⇧</span>
+            <span class="upload-text">
+              <strong id="queryUploadText">Click to attach, or drag file here</strong>
+              <span>Max 5 MB</span>
+            </span>
+            <input type="file" id="queryUpload">
+          </label>
+        </div>
+
+        <button class="btn btn-teal" id="submitQueryBtn" style="margin-top: 8px;">Submit query</button>
+      </div>
+
+      <div class="pipeline-preview">
+        <h4>What happens after you submit</h4>
+        <div class="mini-step"><span class="n">1</span> Goes to your category head</div>
+        <div class="mini-step"><span class="n">2</span> Round 1 vote — all electricians</div>
+        <div class="mini-step"><span class="n">3</span> Union meeting — category heads discuss</div>
+        <div class="mini-step"><span class="n">4</span> Round 2 vote — heads vote</div>
+        <div class="mini-step"><span class="n">5</span> Platform owner decision</div>
+        <div class="mini-step"><span class="n">6</span> Fulfilled</div>
+        <p style="font-size:0.78rem; color:var(--grey-400); margin-top:14px; line-height:1.5;">A query only advances past a voting round if it clears <strong style="color:var(--navy-950);">55% approval</strong>. Track live progress back on the community page.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  // ---- other categories toggle ----
+  const othersToggle = document.getElementById('othersToggle');
+  const othersPanel = document.getElementById('othersPanel');
+  const othersLabel = document.getElementById('othersToggleLabel');
+  othersToggle?.addEventListener('click', () => {
+    const open = othersPanel.classList.toggle('is-open');
+    othersLabel.textContent = open ? 'Click to hide →' : 'Click to view all heads →';
+    if (open) othersPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
+  // ---- main page <-> raise query page toggle ----
+  const mainPage = document.getElementById('mainPage');
+  const raisePage = document.getElementById('raisePage');
+
+  document.getElementById('openRaiseBtn')?.addEventListener('click', () => {
+    mainPage.style.display = 'none';
+    raisePage.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  document.getElementById('backToMainBtn')?.addEventListener('click', () => {
+    raisePage.style.display = 'none';
+    mainPage.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  // ---- channel data (only your trade + platform-wide) ----
+  const channels = {
+    electrician: {
+      emoji: '⚡', title: 'Electricians', subtitle: '312 members · your trade channel',
+      head: 'Rajesh M.', headInit: 'RM', approval: '68% approval'
+    },
+    all: {
+      emoji: '◎', title: 'All workers', subtitle: '1,840 members · platform-wide channel',
+      head: 'Federation Council', headInit: 'FC', approval: 'Rotating monthly chair'
+    }
+  };
+
+  const channelBtns = document.querySelectorAll('.channel-item');
+  const chatEmoji = document.getElementById('chatEmoji');
+  const chatTitle = document.getElementById('chatTitle');
+  const chatSubtitle = document.getElementById('chatSubtitle');
+  const headBadge = document.getElementById('headBadge');
+  const chatInput = document.getElementById('chatInput');
+  const chatBody = document.getElementById('chatBody');
+
+  const chatHistory = {
+    electrician: chatBody ? chatBody.innerHTML : '',
+    all: `
+      <div class="msg">
+        <div class="avatar-sm">KV</div>
+        <div class="msg-body">
+          <div class="msg-meta"><strong>Kavitha R.</strong> · Plumbers Head 8:40 AM</div>
+          <div class="msg-bubble">Reminder to everyone: federation-wide safety briefing this Friday, 6 PM, attendance counts toward your training hours.</div>
+        </div>
+      </div>
+      <div class="msg">
+        <div class="avatar-sm">AV</div>
+        <div class="msg-body">
+          <div class="msg-meta"><strong>Arun V.</strong>8:55 AM</div>
+          <div class="msg-bubble">Will the briefing be recorded for those on emergency jobs at that time?</div>
+        </div>
+      </div>
+      <div class="msg is-self">
+        <div class="avatar-sm">MK</div>
+        <div class="msg-body">
+          <div class="msg-meta">You 9:02 AM</div>
+          <div class="msg-bubble">Good question, +1 on this.</div>
+        </div>
+      </div>`
+  };
+
+  channelBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      channelBtns.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      const key = btn.dataset.channel;
+      const data = channels[key];
+      if (!data) return;
+      chatEmoji.textContent = data.emoji;
+      chatTitle.textContent = data.title;
+      chatSubtitle.textContent = data.subtitle;
+      headBadge.innerHTML = `
+        <div class="avatar-sm">${data.headInit}</div>
+        <div>
+          Category head: <strong>${data.head}</strong><br>
+          <span class="approval">${data.approval}</span>
+        </div>`;
+      chatInput.placeholder = `Message #${key}…`;
+      chatInput.disabled = false;
+      if (chatHistory[key]) chatBody.innerHTML = chatHistory[key];
+    });
+  });
+
+  // ---- send chat (prototype only) ----
+  document.getElementById('chatSendBtn')?.addEventListener('click', sendMessage);
+  chatInput?.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
+
+  function sendMessage() {
+    if (!chatInput || chatInput.disabled || !chatInput.value.trim()) return;
+    const msg = document.createElement('div');
+    msg.className = 'msg is-self';
+    msg.innerHTML = `
+      <div class="avatar-sm">MK</div>
+      <div class="msg-body">
+        <div class="msg-meta">You · just now</div>
+        <div class="msg-bubble">${chatInput.value.replace(/</g, '&lt;')}</div>
+      </div>`;
+    chatBody.appendChild(msg);
+    chatInput.value = '';
+    chatBody.scrollTop = chatBody.scrollHeight;
+  }
+
+  // ---- query type chip select ----
+  document.querySelectorAll('.qtype-option input').forEach(input => {
+    input.addEventListener('change', () => {
+      document.querySelectorAll('.qtype-option').forEach(c => c.classList.remove('is-checked'));
+      input.closest('.qtype-option').classList.add('is-checked');
+    });
+  });
+
+  // ---- query file upload ----
+  const queryUpload = document.getElementById('queryUpload');
+  const queryUploadBox = document.getElementById('queryUploadBox');
+  const queryUploadText = document.getElementById('queryUploadText');
+  queryUpload?.addEventListener('change', () => {
+    if (queryUpload.files.length) {
+      queryUploadText.textContent = queryUpload.files[0].name;
+      queryUploadBox.classList.add('has-file');
+    }
+  });
+
+  // ---- submit query (prototype only — adds a fresh card, then returns to community page) ----
+  document.getElementById('submitQueryBtn')?.addEventListener('click', () => {
+    const type = document.querySelector('input[name="qtype"]:checked')?.value || 'Other';
+    const title = document.getElementById('queryTitle').value || 'Untitled query';
+    if (!document.getElementById('queryDesc').value.trim()) {
+      document.getElementById('queryDesc').focus();
+      return;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'query-card';
+    card.innerHTML = `
+      <div class="query-card-head">
+        <div>
+          <h3>${title}</h3>
+          <span class="meta">${type} · Raised just now · #NQ-${Math.floor(1000 + Math.random() * 9000)}</span>
+        </div>
+        <span class="pill pill-grey">Awaiting category head</span>
+      </div>
+      <div class="qstepper">
+        <div class="qstep is-current"><div class="qline"></div><div class="qdot">1</div><span class="qlabel">Category head</span></div>
+        <div class="qstep"><div class="qline"></div><div class="qdot">2</div><span class="qlabel">Round 1 vote</span></div>
+        <div class="qstep"><div class="qline"></div><div class="qdot">3</div><span class="qlabel">Union meeting</span></div>
+        <div class="qstep"><div class="qline"></div><div class="qdot">4</div><span class="qlabel">Round 2 vote</span></div>
+        <div class="qstep"><div class="qline"></div><div class="qdot">5</div><span class="qlabel">Platform owner</span></div>
+        <div class="qstep"><div class="qdot">6</div><span class="qlabel">Fulfilled</span></div>
+      </div>
+      <div class="query-status-row">
+        <p class="desc">Just submitted — your category head will review and forward it to Round 1 voting.</p>
+        <span class="pill pill-grey">Just now</span>
+      </div>`;
+
+    document.getElementById('queryList').insertBefore(card, document.getElementById('queryList').firstChild);
+
+    document.getElementById('queryTitle').value = '';
+    document.getElementById('queryDesc').value = '';
+
+    // back to main page, scrolled to the queries section
+    raisePage.style.display = 'none';
+    mainPage.style.display = 'block';
+    document.getElementById('queryList').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+})();
+
+</script>
+</body>
+</html>
